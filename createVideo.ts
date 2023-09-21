@@ -26,6 +26,8 @@ export const createVideoFromBuffers = async (buffers: Buffer[]) => {
 		// Close the concat file
 		concatFile.end();
 
+		const time = String(new Date().getUTCDate())
+
 		// Run FFmpeg command to create a video
 		await new Promise((resolve, reject) => {
 			ffmpeg()
@@ -38,7 +40,7 @@ export const createVideoFromBuffers = async (buffers: Buffer[]) => {
 				.outputOptions([
 					'-framerate', '1'
 				])
-				.output('output_video.mp4')
+				.output(`output_video${time}.mp4`)
 				.on('end', resolve)
 				.on('error', reject)
 				.run();
